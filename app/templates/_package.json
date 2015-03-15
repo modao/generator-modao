@@ -1,5 +1,32 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+    "name": "<%= name %>",
+    "version": "1.0.0",
+    "description": "<%= description %>",
+    "main": "gulpfile.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "<%= gitUrl %>"
+    },
+    "keywords": [
+        <%= keywords %>
+    ],
+    "author": "<%= author %>",
+    "devDependencies": {
+        "gulp": "^3.8.6"
+    },
+    "dependencies": {
+        "gulp": "3.8.6",
+        "gulp-concat": "^2.3.3",
+        "gulp-concat-css": "*",
+        "gulp-kmc": "1.0.21",
+        "gulp-rename": "~1.2.0",
+        "gulp-minify-css": "*",
+        "gulp-uglify": "~1.0.2",
+        "through2": "~0.6.3",
+        "gulp-less": "~3.0.1"
+    },
+    "license": "ISC"
 }

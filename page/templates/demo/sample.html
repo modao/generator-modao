@@ -1,0 +1,37 @@
+<!--<%= pageName %>页面-->
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <title>页面名称</title>
+    <link rel="stylesheet" href="http://g.tbcdn.cn/tb/global/3.3.26/global-min.css?t=20150105" />
+    <link rel="stylesheet" href="../build/iconfont/iconfont.css" />
+    <link rel="stylesheet" href="../build/webfont/webfont.css" />
+    <link rel="stylesheet" href="../build/<%= pageName %>.css" />
+    <script src="http://g.alicdn.com/kissy/k/1.4.9/seed-min.js" data-config='{combine:true}'></script>
+</head>
+<body>
+<!--页面内容-->
+<div class="content">
+
+</div>
+<!--输出错误调试信息-->
+<div id="J_error_display"></div>
+<script src="../build/<%= pageName %>.js"></script>
+<script>
+    KISSY.config({
+        'packages': {
+            '<%= pkgName %>': {
+                'base': '../build/',
+                'ignorePackageNameInUri': true,
+                'debug': true,
+                'combine': false,
+                'charset': 'utf-8'
+            }
+        }
+    });
+    KISSY.use('<%= pkgName %>/pages/<%= pageName %>/index');
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+/**
+ * 样例文件：入口模块的样式文件
+ */
+
+/*清除浮动代码*/
+.clearfix:after {
+    content: '\0020';
+    display:block;
+    height:0;
+    clear:both;
+}
+.clearfix{
+    *zoom:1;
+}
+
+.hidden {
+    display: none;
+}
+
+/* overlay样式 */
+.ks-overlay {
+    position:absolute;
+    left:-9999px;
+    top:-9999px;
+}
+.ks-overlay-hidden {
+    visibility: hidden;
+}
+
+.ks-overlay-mask-hidden {
+    display: none;
+}
+
+.ks-overlay-shown {
+    visibility: visible;
+}
+
+.ks-overlay-mask-shown{
+    display: block;
+}
+
+.ks-overlay-mask {
+    background-color: #000;
+    -webkit-webkit-opacity: 0.3;
+    -moz-webkit-opacity: 0.3;
+    -ms-webkit-opacity: 0.3;
+    opacity: 0.3;
+}
