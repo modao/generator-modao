@@ -9,12 +9,7 @@ KISSY.add(function(S, require, exports, module){
 
     module.exports = {
         'globalEvent': globalEvent,
-        'globalData': {
-            //项目interface
-            'ajaxUrls': {
-                'sampleUrl': 'http://sm.admin.taobao.org/viewAll/xxx.do'
-            }
-        },
+        'globalData': {},
         /**
          * 获取globalData中的数据
          * @param key

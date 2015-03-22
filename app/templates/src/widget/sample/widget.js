@@ -8,6 +8,7 @@ KISSY.add(function(S, require, exports, module){
     var Global=require('../../widget/global');
     var Util=require('../../widget/util');
     var Api=require('../../widget/api');
+    var Interface=require('../../widget/interface');
     
     function ModName(){
 

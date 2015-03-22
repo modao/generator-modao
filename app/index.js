@@ -80,6 +80,9 @@ module.exports = yeoman.generators.Base.extend({
         },
         widget: function(){
             this._copyDir('src/widget');
+        },
+        demo: function(){
+            this._copyDir('demo/mock');
         }
     },
 
