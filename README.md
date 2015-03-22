@@ -5,6 +5,11 @@
 
 ## Getting Started
 
+### Introduction
+* generator-modao is a web scaffolding tool for kissy 1.4+.
+* you can quickly create a web project and add page. 
+* The page can run immediately after gulp command.
+
 ### What is Yeoman?
 
 Trick question. It's not a thing. It's this guy:
@@ -29,13 +34,13 @@ To install generator-modao from npm, run:
 npm install -g generator-modao
 ```
 
-Finally, initiate the generator:
+Finally, initiate the generator, creating project:
 
 ```bash
 yo modao
 ```
 
-Add one page, initiate the sub-generator:
+to add one page, initiate the sub-generator:
 
 ```bash
 yo modao:page pagename
