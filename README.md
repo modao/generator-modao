@@ -1,4 +1,4 @@
-# generator-modao [![Build Status](https://secure.travis-ci.org/modao/generator-modao.png?branch=master)](https://travis-ci.org/modao/generator-modao)
+# generator-modao
 
 > [Yeoman](http://yeoman.io) generator
 
