@@ -2,15 +2,13 @@
  * 样例页面：页面入口js模块
  */
 
-KISSY.add(function(S, require, exports, module){
+define(function(require, exports, module){
     
-    var Node=require('node');
-    var Global=require('../../widget/global');
-    var Util=require('../../widget/util');
-    var Api=require('../../widget/api');
-    var Interface=require('../../widget/interface');
+    'use strict';
+    //引入widget中相应模块
+    var Mod = require('./mod/mod');
     
+    new Mod().init();
     
-    //事件绑定
     
 });

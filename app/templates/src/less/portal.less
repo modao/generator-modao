@@ -1,0 +1,147 @@
+@import "mixins";
+@import "variable";
+
+/*清除浮动代码*/
+.clearfix:after {
+    content: '\0020';
+    display:block;
+    height:0;
+    clear:both;
+}
+.clearfix{
+    *zoom:1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* overlay样式 */
+.ks-overlay {
+    position:absolute;
+    left:-9999px;
+    top:-9999px;
+}
+.ks-overlay-hidden {
+    visibility: hidden;
+}
+
+.ks-overlay-mask-hidden {
+    display: none;
+}
+
+.ks-overlay-shown {
+    visibility: visible;
+}
+
+.ks-overlay-mask-shown{
+    display: block;
+}
+
+.ks-overlay-mask {
+    background-color: #000;
+    .opacity(0.3);
+}
+
+.portal {
+    font-size: 12px;
+}
+
+.link {
+    color: @color-link;
+
+    &:hover {
+        color: @color-link;
+        text-decoration: underline;
+    }
+}
+
+.center {
+    text-align: center;
+}
+
+.btn {
+    .border-radius(3px);
+    .inline-block();
+
+    line-height: 23px;
+    margin: 0 4px;
+    background-color: @btn-default-color;
+    color: @btn-default-text-color;
+    padding: 0 8px;
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: @btn-default-hover-color;
+    }
+
+    &.btn-danger {
+        background-color: @btn-danger-color;
+        &:hover {
+            background-color: @btn-danger-hover-color;
+        }
+    }
+
+    &.btn-urge {
+        background-color: @btn-urge-color;
+        border: 1px solid @btn-urge-color;
+        &:hover {
+            background-color: @btn-urge-hover-color;
+            border-color: @btn-urge-hover-color;
+        }
+    }
+    
+    &.btn-light {
+        background-color: #fafafa;
+        border: 1px solid #9b9b9b;
+        color: @color-black;
+    }
+    
+    &.btn-light:hover {
+        color: #ff4400;
+    }
+
+    &.lg {
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        width: 130px;
+        margin: 0 10px;
+    }
+
+    &.md {
+        height: 36px;
+        line-height: 36px;
+        font-size: 14px;
+        min-width: 90px;
+        margin: 0 10px;
+    }
+
+    &.sm {
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        padding: 0 4px;
+    }
+    
+    &.superlg {
+        padding: 12px 42px;
+        text-align: center;
+        line-height: 24px;
+        background-color: @btn-superlg-color;
+        font-size: 20px;
+        &:hover {
+            background-color: @btn-superlg-hover-color;
+        }
+    }
+    &.btn-disable, &.btn-disable:hover {
+        cursor: auto;
+        background-color: @btn-disable-color;
+        border: 1px solid @btn-disable-color;
+        color: @color-gray;
+    }
+    
+}
+
+

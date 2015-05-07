@@ -6,7 +6,9 @@
 ## Getting Started
 
 ### Introduction
-* generator-modao is a web scaffolding tool for kissy 1.4+.
+* generator-modao is a web scaffolding tool for kissy.
+* version 0.0.1 for KISSY1.4+, and version 0.0.2 for KISSY5.
+* more fitable for pc project.
 * you can quickly create a web project and add page. 
 * The page can run immediately after gulp command.
 

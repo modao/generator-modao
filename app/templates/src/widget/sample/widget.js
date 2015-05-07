@@ -2,20 +2,18 @@
  * 样例组件模块的js逻辑
  */
 
-KISSY.add(function(S, require, exports, module){
+define(function(require, exports, module){
 
-    var Node=require('node');
-    var Global=require('../../widget/global');
-    var Util=require('../../widget/util');
-    var Api=require('../../widget/api');
-    var Interface=require('../../widget/interface');
+    'use strict';
+    require('./widget.css');
+    var util = require('util');
     
     function ModName(){
 
 
     }
 
-    S.augment(ModName, {
+    util.augment(ModName, {
         'init': function(){
 
 

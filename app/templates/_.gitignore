@@ -2,3 +2,7 @@
 node_modules/
 .idea/
 *.iml
+*.log
+.DS_Store
+db.json
+dev/

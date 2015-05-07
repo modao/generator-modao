@@ -2,16 +2,20 @@
  * 样例页面模块的js逻辑
  */
 
-KISSY.add(function(S, require, exports, module){
+define(function(require, exports, module){
+    
+    'use strict';
+    var util = require('util');
     
     function ModName(){
         
        
     }
     
-    S.augment(ModName, {
+    util.augment(ModName, {
         'init': function(){
             
+            alert('page mod init!');
             
         },
         

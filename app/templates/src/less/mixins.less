@@ -1,0 +1,97 @@
+.box-sizing (@type: border-box) {
+    -webkit-box-sizing: @type;
+    -moz-box-sizing:    @type;
+    box-sizing:         @type;
+}
+
+.opacity (@opacity: 0.5) {
+    -webkit-opacity:    @opacity;
+    -moz-opacity:       @opacity;
+    opacity:        @opacity;
+}
+
+.border-radius (@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius:    @radius;
+    border-radius:         @radius;
+
+    -moz-background-clip:    padding;
+    -webkit-background-clip: padding-box;
+    background-clip:         padding-box;
+}
+
+.inline-block (@vertical-align: top) {
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: @vertical-align;
+}
+
+.clearfix () {
+    clear: both;
+    *zoom: 1;
+
+    &:before,
+    &:after {
+        display: table;;
+        content: " ";
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+.reset-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.fontfaceq (@font-family) {
+    font-family: @font-family;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.small-point (@size: 3px, @color: #333) {
+    .border-radius(@size);
+    .inline-block();
+    content: ' ';
+    border: @size solid @color;
+    height: 0;
+    width: 0;
+}
+
+.small-triangle(@color: #333, @height: 8px, @width: 10px) {
+    .inline-block();
+    content: ' ';
+    border-color: transparent;
+    border-style: solid;
+    border-top-width: @height;
+    border-bottom-width: @height;
+    border-right: @width solid @color;
+}
+
+.animation (@name, @duration: 300ms, @delay: 0s, @ease: ease) {
+    -webkit-animation: @name @duration @ease @delay;
+    -moz-animation:    @name @duration @ease @delay;
+    -ms-animation:     @name @duration @ease @delay;
+    animation:         @name @duration @ease @delay;
+}
+
+.transform(@string){
+    -webkit-transform: @string;
+    -moz-transform:    @string;
+    -ms-transform:     @string;
+    -o-transform:      @string;
+    transform:         @string;
+}
+
+.transitions(@string){
+    -webkit-transition: @string;
+    -moz-transition: @string;
+    -ms-transition: @string;
+    -o-transition: @string;
+    transition: @string;
+
+}

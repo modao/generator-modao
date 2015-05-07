@@ -81,6 +81,9 @@ module.exports = yeoman.generators.Base.extend({
         widget: function(){
             this._copyDir('src/widget');
         },
+        less: function(){
+            this._copyDir('src/less');
+        },
         demo: function(){
             this._copyDir('demo/mock');
         }
