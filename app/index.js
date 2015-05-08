@@ -70,6 +70,7 @@ module.exports = yeoman.generators.Base.extend({
         projectfiles: function() {
             this._copy('editorconfig', '.editorconfig');
             this._copy('jshintrc', '.jshintrc');
+            this._copy('jshint-reporter.js', 'jshint-reporter.js');
         },
         gulp: function(){
             this._copy('gulpfile.js', 'gulpfile.js');

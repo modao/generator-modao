@@ -7,6 +7,8 @@ var gulp = require('gulp');
 var rename = require('gulp-rename');
 var kmc = require('gulp-kmc');
 var less = require('gulp-less');
+var jshint = require('gulp-jshint');
+var reporter = require('./jshint-reporter');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var minifyCSS = require('gulp-minify-css');
@@ -91,6 +93,14 @@ function eachSubDirLists(fn, done) {
 
     execNext();
 }
+
+
+/** jshint check */
+gulp.task('jshint', function(){
+    return gulp.src(src + '/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter(reporter));
+});
 
 /** for develop */
 gulp.task('kill-dev', function() {
@@ -288,7 +298,7 @@ gulp.task('build', function(done) {
 
         [
             'copy-iconfont', 'copy-webfont',
-            'kmc', 'uglifyJs', 'parseUtf8',
+            'jshint', 'kmc', 'uglifyJs', 'parseUtf8',
             'css', 'minifyCss'
         ],
         done
