@@ -1,6 +1,6 @@
-/*
- * sub-generators page
- * yo generator-modao:page name
+/**
+ * sub-generators widget(ĞÂ½¨Ò»¸öwidgetÄ¿Â¼µÄ×é¼ş)
+ * yo generator-modao:widget name
  */
 
 'use strict';
@@ -9,25 +9,18 @@ var fs = require('fs');
 
 module.exports = yeoman.generators.NamedBase.extend({
     initializing: function () {
-        this.pageName = this.name;
-        //ç”¨æˆ·å¡«å†™çš„é¡¹ç›®ç›¸å…³çš„ä¿¡æ¯
-        this.project = {};
+        this.widgetName = this.name;
     },
 
     writing: {
-        page: function(){
+        widget: function(){
             var _this=this;
-            this._template('demo/sample.html', 'demo/'+ this.pageName +'.html', {
-                pageName: _this.pageName,
-                pkgName: _this.config.get('pkgName')
-            });
-            this._copy('src/page/index.js', 'src/pages/' + this.pageName+'/index.js');
-            this._copy('src/page/index.less', 'src/pages/' + this.pageName+'/index.less');
-//            this._copyDir('src/page/sample/mod', 'src/pages/' + this.pageName+'/mod');
+            this._copy('src/widget/index.js', 'src/widget/'+ _this.widgetName+'/index.js');
+            this._copy('src/widget/index.less', 'src/widget/'+_this.widgetName+'/index.less');
         }
     },
     /**
-     * å¤åˆ¶æ–‡ä»¶
+     * ¸´ÖÆÎÄ¼ş
      * @private
      */
     _copy: function(srcPath, destPath){
@@ -37,7 +30,7 @@ module.exports = yeoman.generators.NamedBase.extend({
         );
     },
     /**
-     * æ¸²æŸ“æ¨¡æ¿å¹¶æ‹·è´æ–‡ä»¶
+     * äÖÈ¾Ä£°å²¢¿½±´ÎÄ¼ş
      * @private
      */
     _template: function(srcPath, destPath, data){
@@ -48,14 +41,14 @@ module.exports = yeoman.generators.NamedBase.extend({
         );
     },
     /**
-     * é€’å½’å¤åˆ¶ä¸€ä¸ªæ–‡ä»¶å¤¹ä¸‹é¢çš„æ‰€æœ‰æ–‡ä»¶åˆ°DestinationPath
+     * µİ¹é¸´ÖÆÒ»¸öÎÄ¼ş¼ĞÏÂÃæµÄËùÓĞÎÄ¼şµ½DestinationPath
      */
     '_copyDir': function(path, destPath){
-        var _this = this;
-        var files = fs.readdirSync(_this.templatePath(path));
+        var _this=this;
+        var files=fs.readdirSync(_this.templatePath(path));
         files.forEach(function(item){
-            var newPath = path + '/' + item;
-            var newDestPath = destPath + '/' + item;
+            var newPath=path+'/'+item;
+            var newDestPath=destPath+'/'+item;
             if(fs.statSync(_this.templatePath(newPath)).isDirectory()){
                 _this._copyDir(newPath);
             }

@@ -7,7 +7,7 @@
 
 ### Introduction
 * generator-modao is a web scaffolding tool for kissy.
-* version 0.0.1 for KISSY1.4+, and version 0.0.2 for KISSY5.
+* version 0.0.1 for KISSY1.4+, and version 0.0.3 for KISSY5.
 * more fitable for pc project.
 * you can quickly create a web project and add page. 
 * The page can run immediately after gulp command.
@@ -46,6 +46,12 @@ to add one page, initiate the sub-generator:
 
 ```bash
 yo modao:page pagename
+```
+
+to add one widget, initiate the sub-generator:
+
+```bash
+yo modao:widget widgetName
 ```
 
 ### Getting To Know Yeoman

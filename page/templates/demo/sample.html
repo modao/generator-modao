@@ -5,12 +5,16 @@
 <head lang="en">
     <meta charset="utf-8">
     <title>页面名称</title>
-    <link rel="stylesheet" href="../build/iconfont/iconfont.css" />
-    <link rel="stylesheet" href="../build/webfont/webfont.css" />
+    <link rel="stylesheet" href="../build/lib/font/iconfont/iconfont.css" />
+    <link rel="stylesheet" href="../build/lib/font/webfont/webfont.css" />
+    <link rel="stylesheet" href="../build/lib/reset.css" />
     <link rel="stylesheet" href="../build/<%= pageName %>.css" />
     <script src="//g.alicdn.com/hi/modulex/5.0.0/seed.js" data-config='{combine:true}'></script>
+    <!--[if lt IE 9]>
+    <script src="//g.alicdn.com/crm/flipper/0.4.0/vendor/html5shiv/html5shiv.js"></script>
+    <![endif]-->
 </head>
-<body env="mock">
+<body env="local" data-token="s9eYra1214">
 <!--页面内容-->
 <div class="content">
 
@@ -22,7 +26,7 @@
     require.config({
         'packages': {
             '<%= pkgName %>': {
-                'base': '../build/',
+                'base': '../dev/',
                 'debug': true,
                 'combine': false,
                 'charset': 'utf-8'

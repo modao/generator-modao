@@ -3,18 +3,17 @@
  */
 
 define(function(require, exports, module){
-    
+
     'use strict';
-    
-    var Node = require('node');
+    var $one = require('node').one;
     var IO = require('io');
     var Url = require('url');
     var util = require('util');
     var QueryString = require('querystring');
-    
+
     var Interface = require('./interface');
     var ErrorHandle = require('./error');
-    
+
     module.exports={
         /**
          * IO请求
@@ -25,15 +24,19 @@ define(function(require, exports, module){
          */
         commonAjax: function(ajaxUrl, ajaxOpt, successCb, failCb){
             ajaxOpt=ajaxOpt || {};
+            var token = $one('body').hasAttr('data-token') ?
+                $one('body').attr('data-token') : '';
             IO({
-                'type': Interface.getAjaxType() || 'get',
-                'url': ajaxUrl,
-                'data': ajaxOpt,
-                'dataType': Interface.getDataType() || 'json',
-                'xhrFields':{
-                    'withCredentials': true
+                type: Interface.getAjaxType() || 'get',
+                url: ajaxUrl,
+                data: util.merge(ajaxOpt, {
+                    _tb_token_: token
+                }),
+                dataType: Interface.getDataType() || 'json',
+                xhrFields:{
+                    withCredentials: true
                 },
-                'success': function(data){
+                success: function(data){
                     /* data参考结构
                        data = {
                            'resultData': {interfaceData},
@@ -47,11 +50,12 @@ define(function(require, exports, module){
                     if (data && data.success && data.resultData) {
                         successCb && successCb.call(this, data.resultData);
                     } else {
-                        ErrorHandle.handleAjaxError(ajaxUrl, ajaxOpt, data.errorCode, data.errorInfo, data.errorStatus);
+                        ErrorHandle.handleAjaxError(ajaxUrl, ajaxOpt,
+                            data.errorCode, data.errorInfo);
                         failCb && failCb.call(this, data);
                     }
                 },
-                'error': function(data, errorText, io){
+                error: function(data, errorText, io){
                     ErrorHandle.handleAjaxError(ajaxUrl, ajaxOpt, io.status, io.statusText);
                     failCb && failCb();
                 }
@@ -67,7 +71,7 @@ define(function(require, exports, module){
         'getParamFromUrl': function(url, key){
             return Url.parse(url, true).query[key];
         },
-        
+
         /**
          * 日期计算
          * 计算d日期前n天或后n天的日期（n的取值可以为正负）
@@ -88,7 +92,7 @@ define(function(require, exports, module){
                 return uom.getFullYear() + '-' + month + '-' + day;
             }
         },
-        
+
         /**
          * 将时间戳格式的日期转换为YYYY-MM-DD字符串类型
          */
@@ -105,7 +109,7 @@ define(function(require, exports, module){
                 return null;
             }
         },
-        
+
         /**
          * 将YYYY-MM-DD类型的日期转换为Date对象，注意不能直接使用new Date('YYYY-MM-DD')，IE8下会有兼容性问题
          */
@@ -160,14 +164,14 @@ define(function(require, exports, module){
                 console.log(msg);
             }
         },
-        
+
         /**
          * 存储sessionStorage数据
          */
         'setSessionStorage': function(key, value){
             window.sessionStorage.setItem(key, value);
         },
-        
+
         /**
          * 获取sessionStorage数据
          */
@@ -178,14 +182,14 @@ define(function(require, exports, module){
                 return null;
             }
         },
-        
+
         /**
          * 存储localStorage数据
          */
         'setLocalStorage': function(key, value){
             window.localStorage.setItem(key, value);
         },
-        
+
         /**
          * 获取localStorage数据
          */
@@ -195,7 +199,26 @@ define(function(require, exports, module){
             }else{
                 return null;
             }
+        },
+
+        /**
+         * 清除当前域下的localStorage（慎用！确保不会删掉其他人的）
+         */
+        'clearLocalStorage': function() {
+            window.localStorage.clear();
+        },
+
+        /**
+         * 监听postMessage事件API(直接使用类库的监听方案会出现监听不到的bug)
+         * @param callback 监听到postMessage消息的回调函数
+         */
+        'onPostMessage': function(callback) {
+            if (typeof window.addEventListener !== 'undefined') {
+                window.addEventListener('message', callback, false);
+            } else if (typeof window.attachEvent !== 'undefined') {
+                window.attachEvent('onmessage', callback);
+            }
         }
     };
-    
+
 });

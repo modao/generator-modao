@@ -6,34 +6,34 @@ define(function(require, exports, module){
 
     'use strict';
     var ErrorHandle = require('./error');
-    
+
     var DEFAULT_ENV = 'prod';
     var AJAX_TYPES = {
         prod: 'post',
-        local: 'post',
-        mock: 'get'
+        daily: 'post',
+        local: 'get'
     };
     var DATA_TYPES = {
         prod: 'json',
-        local: 'json',
-        mock: 'json'
+        daily: 'json',
+        local: 'json'
     };
-    
+
     var URLS={
         prod: {
             //sample
             ajaxUrl: '//server/ajax/ajaxUrl.do'
         },
-        local: {
+        daily: {
             //sample
             ajaxUrl: '//server/ajax/ajaxUrl.do'
         },
-        mock: {
+        local: {
             //sample
             ajaxUrl: '/demo/mock/ajaxUrl.json'
         }
     };
-    
+
     /**
      * 获取当前ENV
      */
@@ -60,7 +60,7 @@ define(function(require, exports, module){
         }
         return URLS[env][name];
     }
-    
+
     /**
      * 根据当前env获取请求类型
      */
@@ -85,7 +85,7 @@ define(function(require, exports, module){
         }
         return DATA_TYPES[env];
     }
-    
+
     module.exports.getUrl = getUrl;
     module.exports.getEnv = getEnv;
     module.exports.getAjaxType = getAjaxType;

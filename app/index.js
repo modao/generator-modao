@@ -8,9 +8,9 @@ module.exports = yeoman.generators.Base.extend({
     initializing: function () {
         this.pkg = require('../package.json');
         //用户填写的项目相关的信息
-        this.project={};
+        this.project = {};
     },
-    
+
     prompting: function () {
         var done = this.async();
 
@@ -48,42 +48,40 @@ module.exports = yeoman.generators.Base.extend({
 
         //.bind(this)是将this作用域保证指向generator
         this.prompt(prompts, function (answers) {
-            this.project.name=answers.name;
+            this.project.name = answers.name;
             //将name存入generator.storage中，供sub-generator调用
             this.config.set('pkgName', answers.name);
-            this.project.description=answers.description;
-            this.project.gitUrl=answers.gitUrl;
-            this.project.keywords=answers.keywords;
-            this.project.author=answers.author;
+            this.project.description = answers.description;
+            this.project.gitUrl = answers.gitUrl;
+            this.project.keywords = answers.keywords;
+            this.project.author = answers.author;
             done();
         }.bind(this));
     },
 
     writing: {
         app: function () {
-            this.project.keywords=this._convertKeywords(this.project.keywords);
+            this.project.keywords = this._convertKeywords(this.project.keywords);
             this._template('_package.json', 'package.json', this.project);
-            this._copy('_bower.json', 'bower.json');
             this._copy('README.md', 'README.md');
             this._copy('_.gitignore', '.gitignore');
         },
         projectfiles: function() {
-            this._copy('editorconfig', '.editorconfig');
             this._copy('jshintrc', '.jshintrc');
             this._copy('jshint-reporter.js', 'jshint-reporter.js');
+            this._copy('jscsrc', '.jscsrc');
         },
         gulp: function(){
             this._copy('gulpfile.js', 'gulpfile.js');
         },
-        font: function(){
-            this._copyDir('src/iconfont');
-            this._copyDir('src/webfont');
+        lib: function(){
+            this._copyDir('src/lib');
         },
         widget: function(){
             this._copyDir('src/widget');
         },
         less: function(){
-            this._copyDir('src/less');
+            this._copyDir('src/stylelib');
         },
         demo: function(){
             this._copyDir('demo/mock');
@@ -91,6 +89,7 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     install: function () {
+        //不使用自动npm install安装，是因为使用tnpm会更快
 //        this.installDependencies({
 //            skipInstall: this.options['skip-install']
 //        });
@@ -120,10 +119,10 @@ module.exports = yeoman.generators.Base.extend({
      * 递归复制一个文件夹下面的所有文件到DestinationPath
      */
     '_copyDir': function(path){
-        var _this=this;
+        var _this = this;
         var files=fs.readdirSync(_this.templatePath(path));
         files.forEach(function(item){
-            var newPath=path+'/'+item;
+            var newPath = path + '/' + item;
             if(fs.statSync(_this.templatePath(newPath)).isDirectory()){
                 _this._copyDir(newPath);
             }
@@ -137,9 +136,9 @@ module.exports = yeoman.generators.Base.extend({
      * @private
      */
     _convertKeywords: function(keywords){
-        var arr=keywords.split(',');
+        var arr = keywords.split(',');
         arr.forEach(function(keyword, index, array){
-            array[index]='"'+keyword+'"';
+            array[index] = '"' + keyword + '"';
         });
         return arr.join(',');
     }

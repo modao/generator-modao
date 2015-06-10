@@ -2,6 +2,8 @@
  * gulpfile
  */
 
+'use strict';
+
 var fs = require('fs');
 var gulp = require('gulp');
 var rename = require('gulp-rename');
@@ -9,6 +11,7 @@ var kmc = require('gulp-kmc');
 var less = require('gulp-less');
 var jshint = require('gulp-jshint');
 var reporter = require('./jshint-reporter');
+var jscs = require('gulp-jscs');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var minifyCSS = require('gulp-minify-css');
@@ -102,6 +105,15 @@ gulp.task('jshint', function(){
         .pipe(jshint.reporter(reporter));
 });
 
+/** jscs check **/
+gulp.task('jscs', function(){
+    return gulp.src([
+        src + '/**/*.js',
+        '!' + src + '/lib/**/*.js'
+    ])
+        .pipe(jscs());
+});
+
 /** for develop */
 gulp.task('kill-dev', function() {
     return gulp.src(dev, { read: false })
@@ -110,9 +122,9 @@ gulp.task('kill-dev', function() {
 
 gulp.task('dev-copy-src', function() {
     return gulp.src( [
-            src + '/**/*',
-            '!' + src + '/**/*.less',
-            '!' + src + '/**/*.xtpl'
+        src + '/**/*',
+        '!' + src + '/**/*.less',
+        '!' + src + '/**/*.xtpl'
     ])
         .pipe(gulp.dest(dev));
 });
@@ -172,7 +184,7 @@ gulp.task('kill-build', function() {
 
 gulp.task('copy-iconfont', ['dev-copy-src'], function(){
     return gulp.src([
-            dev + '/iconfont/**/*'
+        dev + '/iconfont/**/*'
     ])
         .pipe(gulp.dest(dest + '/iconfont'));
 
@@ -180,10 +192,30 @@ gulp.task('copy-iconfont', ['dev-copy-src'], function(){
 
 gulp.task('copy-webfont', ['dev-copy-src'], function(){
     return gulp.src([
-            dev + '/webfont/**/*'
+        dev + '/webfont/**/*'
     ])
         .pipe(gulp.dest(dest + '/webfont'));
 
+});
+
+gulp.task('copy-lib', ['dev-copy-src'], function(){
+    return gulp.src([
+        dev + '/lib/**/*',
+        '!' + dev + '/**/*.less',
+        '!' + dev + '/**/*.js'
+    ])
+        .pipe(gulp.dest(dest + '/lib'));
+
+});
+
+gulp.task('lib-js', ['copy-lib'], function(){
+    return gulp.src([
+        dev + 'lib/**/*.js'
+    ])
+        .pipe(rename(function(path){
+            path.basename += '-debug';
+        }))
+        .pipe(gulp.dest(dest + 'lib/'));
 });
 
 gulp.task('kmc', ['dev-copy-js', 'dev-xtpl'], function (done) {
@@ -198,8 +230,8 @@ gulp.task('kmc', ['dev-copy-js', 'dev-xtpl'], function (done) {
 
     eachSubDirLists(function(subDir, end) {
         gulp.src([
-                dev + 'pages/' + subDir + '/**/*.js',
-                dev + 'widget/**/*.js'
+            dev + 'pages/' + subDir + '/**/*.js',
+            dev + 'widget/**/*.js'
         ])
             .pipe(sort())
             .pipe(check())
@@ -218,7 +250,7 @@ gulp.task('kmc', ['dev-copy-js', 'dev-xtpl'], function (done) {
 
 gulp.task('uglifyJs', [ 'kmc' ], function() {
     return gulp.src([
-            dest + '**/*-debug.js'
+        dest + '**/*-debug.js'
     ])
         .pipe(rename(function(path){
             path.basename =
@@ -248,7 +280,7 @@ gulp.task('parseUtf8', [ 'uglifyJs' ], function() {
 
 gulp.task('iconfont-css', [ 'dev-less' ], function() {
     return gulp.src([
-            dev + 'iconfont/iconfont.css'
+        dev + 'iconfont/iconfont.css'
     ])
         .pipe(rename(function(path){
             path.basename += '-debug';
@@ -258,7 +290,7 @@ gulp.task('iconfont-css', [ 'dev-less' ], function() {
 
 gulp.task('webfont-css', [ 'dev-less' ], function() {
     return gulp.src([
-            dev + 'webfont/webfont.css'
+        dev + 'webfont/webfont.css'
     ])
         .pipe(rename(function(path){
             path.basename += '-debug';
@@ -266,11 +298,21 @@ gulp.task('webfont-css', [ 'dev-less' ], function() {
         .pipe(gulp.dest(dest + 'webfont/'));
 });
 
-gulp.task('css', [ 'dev-less' , 'iconfont-css', 'webfont-css'], function (done) {
+gulp.task('lib-css', ['dev-less'], function() {
+    return gulp.src([
+        dev + 'lib/**/*.css'
+    ])
+        .pipe(rename(function(path){
+            path.basename += '-debug';
+        }))
+        .pipe(gulp.dest(dest + 'lib/'));
+});
+
+gulp.task('css', [ 'dev-less' , 'iconfont-css', 'webfont-css', 'lib-css'], function (done) {
     eachSubDirLists(function(subDir, end) {
         gulp.src([
-                dev + 'pages/' + subDir + '/**/*.css',
-                dev + 'widget/**/*.css'
+            dev + 'pages/' + subDir + '/**/*.css',
+            dev + 'widget/**/*.css'
         ])
             .pipe(sort())
             .pipe(check())
@@ -282,7 +324,7 @@ gulp.task('css', [ 'dev-less' , 'iconfont-css', 'webfont-css'], function (done) 
 
 gulp.task('minifyCss', [ 'css', 'copy-iconfont', 'copy-webfont' ], function() {
     return gulp.src([
-            dest + '**/*-debug.css'
+        dest + '**/*-debug.css'
     ])
         .pipe(rename(function(path){
             path.basename =
@@ -295,10 +337,9 @@ gulp.task('minifyCss', [ 'css', 'copy-iconfont', 'copy-webfont' ], function() {
 gulp.task('build', function(done) {
     sequence(
         [ 'kill-dev', 'kill-build'],
-
         [
             'copy-iconfont', 'copy-webfont',
-            'jshint', 'kmc', 'uglifyJs', 'parseUtf8',
+            'copy-lib', 'kmc', 'uglifyJs', 'parseUtf8',
             'css', 'minifyCss'
         ],
         done
@@ -306,4 +347,5 @@ gulp.task('build', function(done) {
 });
 
 gulp.task('clean',   [ 'kill-dev' ] );
+gulp.task('check', [ 'jshint', 'jscs' ] );
 gulp.task('default', [ 'build' ]);
